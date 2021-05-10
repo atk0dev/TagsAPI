@@ -1,3 +1,8 @@
+using System;
+using Microsoft.AspNetCore.Hosting.Server.Features;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.Logging;
+
 namespace Api
 {
     using Api.Middleware;
@@ -38,8 +43,22 @@ namespace Api
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        static void LogAddresses(IFeatureCollection features, ILogger logger)
         {
+            var addressFeature = features.Get<IServerAddressesFeature>();
+
+            foreach (var addresses in addressFeature.Addresses)
+            {
+                logger.LogInformation("Listening on address: " + addresses);
+            }
+        }
+
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime, ILogger<Startup> logger)
+        {
+            lifetime.ApplicationStarted.Register(
+                () => LogAddresses(app.ServerFeatures, logger));
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
