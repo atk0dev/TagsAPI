@@ -32,14 +32,13 @@
                     var logger = scopedServices.GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
 
                     var baseService = new BaseService<Domain.Entities.Tag>(
-                        new MongoClient("mongodb://admin:password@localhost:27017"),
+                        new MongoClient("mongodb://localhost:27017"),
                         new BaseRepository<Domain.Entities.Tag>(), 
                         new LoggedInUserService(), 
-                        new TagsDatabaseSettings
+                        new DatabaseContext
                         {
-                            ConnectionString = "mongodb://admin:password@localhost:27017",
+                            ConnectionString = "mongodb://localhost:27017",
                             DatabaseName = $"TagsDb",
-                            TagsCollectionName = $"Tags"
                         });
 
                     services.AddSingleton(baseService);

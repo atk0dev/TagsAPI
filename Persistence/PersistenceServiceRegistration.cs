@@ -13,14 +13,14 @@
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<TagsDatabaseSettings>(
-                configuration.GetSection(nameof(TagsDatabaseSettings)));
+            services.Configure<DatabaseContext>(
+                configuration.GetSection(nameof(DatabaseContext)));
 
-            services.AddSingleton<ITagsDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<TagsDatabaseSettings>>().Value);
+            services.AddSingleton<IDatabaseContext>(sp =>
+                sp.GetRequiredService<IOptions<DatabaseContext>>().Value);
 
             services.AddSingleton<IMongoClient, MongoClient>(sp =>
-                new MongoClient(configuration.GetSection("TagsDatabaseSettings:ConnectionString").Value));
+                new MongoClient(configuration.GetSection("DatabaseContext:ConnectionString").Value));
 
             services.AddSingleton(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddSingleton(typeof(IBaseService<>), typeof(BaseService<>));

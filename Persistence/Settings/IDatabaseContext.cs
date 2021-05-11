@@ -1,9 +1,7 @@
 ﻿namespace Persistence.Settings
 {
-    public interface ITagsDatabaseSettings
+    public interface IDatabaseContext
     {
-        string TagsCollectionName { get; set; }
-       
         string ConnectionString { get; set; }
         
         string DatabaseName { get; set; }

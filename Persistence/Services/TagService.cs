@@ -14,8 +14,8 @@
             IMongoClient client,
             IBaseRepository<Domain.Entities.Tag> repository, 
             ILoggedInUserService loggedInUserService, 
-            ITagsDatabaseSettings settings)
-            : base(client, repository, loggedInUserService, settings)
+            IDatabaseContext context)
+            : base(client, repository, loggedInUserService, context)
         {
         }
 

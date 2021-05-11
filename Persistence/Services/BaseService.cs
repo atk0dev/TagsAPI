@@ -20,14 +20,14 @@
             IMongoClient client, 
             IBaseRepository<T> repository, 
             ILoggedInUserService loggedInUserService, 
-            ITagsDatabaseSettings settings)
+            IDatabaseContext context)
         {
-            var database = client.GetDatabase(settings.DatabaseName);
+            var database = client.GetDatabase(context.DatabaseName);
             
             this._loggedInUserService = loggedInUserService;
 
             this._repository = repository;
-            this._repository.SetCollection(database.GetCollection<T>(settings.TagsCollectionName));
+            this._repository.SetCollection(database.GetCollection<T>(nameof(T)));
         }
 
         public async Task<List<T>> Get()
