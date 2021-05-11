@@ -1,22 +1,21 @@
-using System;
-using Api;
-using IntegrationTests.Base;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Features.Tags.Commands.CreateTag;
-using Application.Features.Tags.Queries.GetTagDetail;
-using Application.Features.Tags.Queries.GetTagsList;
-using Domain.Entities;
-using Microsoft.Extensions.DependencyInjection;
-using Persistence.Services;
-using Xunit;
-
 namespace IntegrationTests.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Api;
+    using Application.Features.Tags.Commands.CreateTag;
+    using Application.Features.Tags.Queries.GetTagDetail;
+    using Application.Features.Tags.Queries.GetTagsList;
+    using Domain.Entities;
+    using IntegrationTests.Base;
+    using Microsoft.Extensions.DependencyInjection;
+    using Newtonsoft.Json;
+    using Persistence.Services;
+    using Xunit;
 
     public class TagControllerTests : IClassFixture<CustomWebApplicationFactory<Startup>>, IDisposable
     {
@@ -24,16 +23,16 @@ namespace IntegrationTests.Controllers
 
         public TagControllerTests(CustomWebApplicationFactory<Startup> factory)
         {
-            _factory = factory;
+            this._factory = factory;
 
-            var baseService = _factory.Services.GetRequiredService(typeof(BaseService<Tag>)) as BaseService<Tag>;
-            //Utilities.InitializeDbForTests(baseService);
+            var baseService = this._factory.Services.GetRequiredService(typeof(BaseService<Tag>)) as BaseService<Tag>;
+            Utilities.InitializeDbForTests(baseService);
         }
 
         [Fact]
         public async Task GetAllTags_ReturnsSuccessResult()
         {
-            var client = _factory.GetAnonymousClient();
+            var client = this._factory.GetAnonymousClient();
 
             var response = await client.GetAsync("/api/tag/all");
 
@@ -54,7 +53,7 @@ namespace IntegrationTests.Controllers
         [Fact]
         public async Task GetTagById_ReturnsSuccessResult()
         {
-            var client = _factory.GetAnonymousClient();
+            var client = this._factory.GetAnonymousClient();
 
             var response = await client.GetAsync($"/api/tag/{Data.Tag1Id}");
 
@@ -73,7 +72,7 @@ namespace IntegrationTests.Controllers
         [Fact]
         public async Task AddTag_ReturnsNewTag()
         {
-            var client = _factory.GetAnonymousClient();
+            var client = this._factory.GetAnonymousClient();
 
             string newTagName = "Test tag";
 
@@ -86,9 +85,7 @@ namespace IntegrationTests.Controllers
                 Name = newTagName,
                 Description = "Description",
                 SelfAssign = false,
-                //IsArchived = false,
                 RequiresOnboarding = false,
-                //TagID = string.Empty,
             };
 
             var stringContent = new StringContent(JsonConvert.SerializeObject(newTag), Encoding.UTF8, "application/json");
@@ -110,7 +107,7 @@ namespace IntegrationTests.Controllers
         [Fact]
         public async Task UpdateTag_ReturnsNewTag()
         {
-            var client = _factory.GetAnonymousClient();
+            var client = this._factory.GetAnonymousClient();
 
             var updatedTag = new Tag
             {
@@ -130,18 +127,17 @@ namespace IntegrationTests.Controllers
         [Fact]
         public async Task DeleteTag_ReturnsNewTag()
         {
-            var client = _factory.GetAnonymousClient();
+            var client = this._factory.GetAnonymousClient();
 
             var response = await client.DeleteAsync($"/api/tag/{Data.Tag2Id}");
 
             response.EnsureSuccessStatusCode();
         }
 
-
         public void Dispose()
         {
-            var baseService = _factory.Services.GetRequiredService(typeof(BaseService<Tag>)) as BaseService<Tag>;
-            //Utilities.CleanDbAfterTest(baseService);
+            var baseService = this._factory.Services.GetRequiredService(typeof(BaseService<Tag>)) as BaseService<Tag>;
+            Utilities.CleanDbAfterTest(baseService);
         }
     }
 }

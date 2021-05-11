@@ -1,25 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Application.Contracts;
-using Application.Contracts.Persistence;
-using Domain.Entities;
-using Persistence.Repositories;
-using Persistence.Settings;
-
-namespace Persistence.Services
+﻿namespace Persistence.Services
 {
-    public class TagService : BaseService<Tag>, ITagService
-    {   
-        public TagService(IBaseRepository<Tag> repository, ILoggedInUserService loggedInUserService, ITagsDatabaseSettings settings)
-            : base(repository, loggedInUserService, settings)
-        {
+    using System;
+    using System.Threading.Tasks;
+    using Application.Contracts;
+    using Application.Contracts.Persistence;
+    using MongoDB.Driver;
+    using Persistence.Repositories;
+    using Persistence.Settings;
 
+    public class TagService : BaseService<Domain.Entities.Tag>, ITagService
+    {   
+        public TagService(
+            IMongoClient client,
+            IBaseRepository<Domain.Entities.Tag> repository, 
+            ILoggedInUserService loggedInUserService, 
+            ITagsDatabaseSettings settings)
+            : base(client, repository, loggedInUserService, settings)
+        {
         }
 
-        public Task<Tag> CreateTag(Tag tag)
+        public async Task<Domain.Entities.Tag> CreateTag(Domain.Entities.Tag tag)
         {
-            throw new NotImplementedException();
+            tag.TagID = Guid.NewGuid().ToString();
+            tag.IsArchived = false;
+
+            return await this.Create(tag);
         }
     }
 }

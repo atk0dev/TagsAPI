@@ -1,8 +1,3 @@
-using System;
-using Microsoft.AspNetCore.Hosting.Server.Features;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.Extensions.Logging;
-
 namespace Api
 {
     using Api.Middleware;
@@ -11,9 +6,12 @@ namespace Api
     using Application.Contracts;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Hosting.Server.Features;
+    using Microsoft.AspNetCore.Http.Features;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
     using Microsoft.OpenApi.Models;
     using Persistence;
 
@@ -43,25 +41,11 @@ namespace Api
             });
         }
 
-        static void LogAddresses(IFeatureCollection features, ILogger logger)
-        {
-            var addressFeature = features.Get<IServerAddressesFeature>();
-
-            if (addressFeature != null)
-            {
-                foreach (var addresses in addressFeature.Addresses)
-                {
-                    logger.LogInformation("Listening on address: " + addresses);
-                }
-            }
-        }
-
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime, ILogger<Startup> logger)
         {
             lifetime.ApplicationStarted.Register(
                 () => LogAddresses(app.ServerFeatures, logger));
-
-
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -88,6 +72,19 @@ namespace Api
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static void LogAddresses(IFeatureCollection features, ILogger logger)
+        {
+            var addressFeature = features.Get<IServerAddressesFeature>();
+
+            if (addressFeature != null)
+            {
+                foreach (var addresses in addressFeature.Addresses)
+                {
+                    logger.LogInformation("Listening on address: " + addresses);
+                }
+            }
         }
 
         private void AddSwagger(IServiceCollection services)

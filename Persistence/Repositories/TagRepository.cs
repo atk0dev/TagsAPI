@@ -11,7 +11,7 @@
 
         public async Task<Tag> CreateTag(Tag tag)
         {
-            return await base.Create(tag);
+            return await this.Create(tag);
         }
     }
 }

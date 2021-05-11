@@ -27,6 +27,5 @@
 
         [BsonElement("IsArchived")]
         public bool IsArchived { get; set; }
-
     }
 }

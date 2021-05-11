@@ -16,9 +16,12 @@
         private readonly IBaseRepository<T> _repository;
         private readonly ILoggedInUserService _loggedInUserService;
 
-        public BaseService(IBaseRepository<T> repository, ILoggedInUserService loggedInUserService, ITagsDatabaseSettings settings)
+        public BaseService(
+            IMongoClient client, 
+            IBaseRepository<T> repository, 
+            ILoggedInUserService loggedInUserService, 
+            ITagsDatabaseSettings settings)
         {
-            var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
             
             this._loggedInUserService = loggedInUserService;

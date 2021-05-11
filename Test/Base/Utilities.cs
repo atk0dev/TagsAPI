@@ -1,8 +1,7 @@
-﻿using System.Linq;
-
-namespace IntegrationTests.Base
+﻿namespace IntegrationTests.Base
 {
     using System;
+    using System.Linq;
     using Domain.Entities;
     using Persistence.Services;
 

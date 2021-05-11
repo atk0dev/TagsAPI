@@ -6,7 +6,7 @@
     {
         public LoggedInUserService()
         {
-            this.UserId = "Anonymous";
+            this.UserId = "11111111-a96e-4dc1-9cfa-4ac441fbeb6d";
         }
 
         public string UserId { get; }

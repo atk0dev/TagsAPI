@@ -10,15 +10,13 @@
 
     public class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, CreateTagCommandResponse>
     {
-        private readonly IBaseService<Tag> _service;
-        private readonly ITagService tagSevice;
+        private readonly ITagService _tagService;
         private readonly IMapper _mapper;
 
-        public CreateTagCommandHandler(IMapper mapper, IBaseService<Tag> service, ITagService tagSevice)
+        public CreateTagCommandHandler(IMapper mapper, IBaseService<Tag> service, ITagService tagService)
         {
             this._mapper = mapper;
-            this._service = service;
-            this.tagSevice = tagSevice;
+            this._tagService = tagService;
         }
 
         public async Task<CreateTagCommandResponse> Handle(CreateTagCommand request, CancellationToken cancellationToken)
@@ -40,8 +38,15 @@
 
             if (response.Success)
             {
-                var tag = new Tag() { Name = request.Name };
-                tag = await this._service.Create(tag);
+                var tag = new Tag()
+                {
+                    Name = request.Name,
+                    Description = request.Description,
+                    SelfAssign = request.SelfAssign,
+                    RequiresOnboarding = request.RequiresOnboarding
+                };
+
+                tag = await this._tagService.CreateTag(tag);
                 response.Tag = this._mapper.Map<CreateTagDto>(tag);
             }
 
