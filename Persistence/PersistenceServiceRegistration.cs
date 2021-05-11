@@ -21,6 +21,7 @@
             services.AddSingleton(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddSingleton(typeof(IBaseService<>), typeof(BaseService<>));
             services.AddSingleton<TagRepository>();
+            services.AddSingleton(typeof(ITagService), typeof(TagService));
             
             return services;    
         }

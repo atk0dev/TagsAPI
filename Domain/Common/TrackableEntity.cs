@@ -4,12 +4,12 @@
 
     public class TrackableEntity : ITrackableEntity
     {
-        public string CreatedBy { get; set; }
+        public string CreatedByID { get; set; }
 
         public DateTime CreatedDate { get; set; }
         
-        public string LastModifiedBy { get; set; }
+        public string UpdatedByID { get; set; }
         
-        public DateTime? LastModifiedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
     }
 }

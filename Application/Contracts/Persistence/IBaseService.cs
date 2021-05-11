@@ -1,18 +1,10 @@
 ﻿namespace Application.Contracts.Persistence
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Domain.Entities;
 
-    public interface IBaseService<T> where T : class
+    public interface ITagService : IBaseService<Tag>
     {
-        Task<T> Get(string id);
-
-        Task<List<T>> Get();
-
-        Task<T> Create(T entity);
-        
-        Task Update(string id, T entity);
-
-        Task Remove(string id);
+        Task<Tag> CreateTag(Tag tag);
     }
 }

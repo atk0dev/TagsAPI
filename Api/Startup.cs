@@ -47,9 +47,12 @@ namespace Api
         {
             var addressFeature = features.Get<IServerAddressesFeature>();
 
-            foreach (var addresses in addressFeature.Addresses)
+            if (addressFeature != null)
             {
-                logger.LogInformation("Listening on address: " + addresses);
+                foreach (var addresses in addressFeature.Addresses)
+                {
+                    logger.LogInformation("Listening on address: " + addresses);
+                }
             }
         }
 

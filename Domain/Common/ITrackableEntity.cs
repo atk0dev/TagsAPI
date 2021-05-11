@@ -4,12 +4,12 @@
 
     public interface ITrackableEntity
     {
-        string CreatedBy { get; set; }
+        string CreatedByID { get; set; }
 
         DateTime CreatedDate { get; set; }
 
-        string LastModifiedBy { get; set; }
+        string UpdatedByID { get; set; }
 
-        DateTime? LastModifiedDate { get; set; }
+        DateTime? UpdatedDate { get; set; }
     }
 }

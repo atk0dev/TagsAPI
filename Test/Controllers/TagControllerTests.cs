@@ -27,7 +27,7 @@ namespace IntegrationTests.Controllers
             _factory = factory;
 
             var baseService = _factory.Services.GetRequiredService(typeof(BaseService<Tag>)) as BaseService<Tag>;
-            Utilities.InitializeDbForTests(baseService);
+            //Utilities.InitializeDbForTests(baseService);
         }
 
         [Fact]
@@ -79,11 +79,16 @@ namespace IntegrationTests.Controllers
 
             var newTag = new Tag
             {
-                CreatedBy = Data.TagAuthor,
-                LastModifiedBy = Data.TagAuthor,
+                CreatedByID = Data.TagAuthor,
                 CreatedDate = DateTime.UtcNow,
-                LastModifiedDate = DateTime.UtcNow,
-                Name = newTagName
+                UpdatedByID = Data.TagAuthor,
+                UpdatedDate = DateTime.UtcNow,
+                Name = newTagName,
+                Description = "Description",
+                SelfAssign = false,
+                //IsArchived = false,
+                RequiresOnboarding = false,
+                //TagID = string.Empty,
             };
 
             var stringContent = new StringContent(JsonConvert.SerializeObject(newTag), Encoding.UTF8, "application/json");
@@ -111,8 +116,8 @@ namespace IntegrationTests.Controllers
             {
                 Id = Data.Tag1Id,
                 Name = "Updated Tag Name",
-                LastModifiedBy = Data.TagAuthor,
-                LastModifiedDate = DateTime.UtcNow,
+                UpdatedByID = Data.TagAuthor,
+                UpdatedDate = DateTime.UtcNow,
             };
 
             var stringContent = new StringContent(JsonConvert.SerializeObject(updatedTag), Encoding.UTF8, "application/json");
@@ -136,7 +141,7 @@ namespace IntegrationTests.Controllers
         public void Dispose()
         {
             var baseService = _factory.Services.GetRequiredService(typeof(BaseService<Tag>)) as BaseService<Tag>;
-            Utilities.CleanDbAfterTest(baseService);
+            //Utilities.CleanDbAfterTest(baseService);
         }
     }
 }

@@ -11,12 +11,14 @@
     public class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, CreateTagCommandResponse>
     {
         private readonly IBaseService<Tag> _service;
+        private readonly ITagService tagSevice;
         private readonly IMapper _mapper;
 
-        public CreateTagCommandHandler(IMapper mapper, IBaseService<Tag> service)
+        public CreateTagCommandHandler(IMapper mapper, IBaseService<Tag> service, ITagService tagSevice)
         {
             this._mapper = mapper;
             this._service = service;
+            this.tagSevice = tagSevice;
         }
 
         public async Task<CreateTagCommandResponse> Handle(CreateTagCommand request, CancellationToken cancellationToken)

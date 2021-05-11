@@ -19,10 +19,10 @@ namespace IntegrationTests.Base
             tagService.Create(new Tag
             {
                 Id = Data.Tag1Id,
-                CreatedBy = Data.TagAuthor,
+                CreatedByID = Data.TagAuthor,
                 CreatedDate = DateTime.UtcNow,
-                LastModifiedBy = Data.TagAuthor,
-                LastModifiedDate = DateTime.UtcNow,
+                UpdatedByID = Data.TagAuthor,
+                UpdatedDate = DateTime.UtcNow,
                 Name = Data.Tag1Name
             })
                     .Wait();
@@ -30,10 +30,10 @@ namespace IntegrationTests.Base
             tagService.Create(new Tag
             {
                 Id = Data.Tag2Id,
-                CreatedBy = Data.TagAuthor,
+                CreatedByID = Data.TagAuthor,
                 CreatedDate = DateTime.UtcNow,
-                LastModifiedBy = Data.TagAuthor,
-                LastModifiedDate = DateTime.UtcNow,
+                UpdatedByID = Data.TagAuthor,
+                UpdatedDate = DateTime.UtcNow,
                 Name = Data.Tag2Name
             })
                     .Wait();

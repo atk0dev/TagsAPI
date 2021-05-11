@@ -29,7 +29,7 @@
 
         public async Task<List<T>> Get()
         {
-            return await this._repository.Get();
+            return await this._repository.Get();    
         }
 
         public async Task<T> Get(string id)
@@ -42,11 +42,9 @@
             var now = DateTime.UtcNow;
             var user = this._loggedInUserService.UserId;
 
-            item.CreatedBy = user;
+            item.CreatedByID = user;
             item.CreatedDate = now;
-            item.LastModifiedBy = user;
-            item.LastModifiedDate = now;
-
+            
             await this._repository.Create(item);
             return item;
         }
@@ -56,8 +54,8 @@
             var now = DateTime.UtcNow;
             var user = this._loggedInUserService.UserId;
 
-            item.LastModifiedBy = user;
-            item.LastModifiedDate = now;
+            item.UpdatedByID = user;
+            item.UpdatedDate = now;
 
             await this._repository.Update(id, item);
         }

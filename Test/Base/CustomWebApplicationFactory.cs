@@ -35,7 +35,7 @@ namespace IntegrationTests.Base
                         new LoggedInUserService(), 
                         new TagsDatabaseSettings
                         {
-                            ConnectionString = "mongodb://localhost:27017",
+                            ConnectionString = "mongodb://admin:password@localhost:27017",
                             DatabaseName = $"TagsDb",
                             TagsCollectionName = $"Tags"
                         });
@@ -44,7 +44,7 @@ namespace IntegrationTests.Base
 
                     try
                     {
-                        Utilities.InitializeDbForTests(baseService);
+                        //Utilities.InitializeDbForTests(baseService);
                     }
                     catch (Exception ex)
                     {
