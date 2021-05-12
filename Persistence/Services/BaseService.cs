@@ -15,6 +15,7 @@
     {
         private readonly IBaseRepository<T> _repository;
         private readonly ILoggedInUserService _loggedInUserService;
+        private readonly IMongoDatabase _database;
 
         public BaseService(
             IMongoClient client, 
@@ -22,12 +23,12 @@
             ILoggedInUserService loggedInUserService, 
             IDatabaseContext context)
         {
-            var database = client.GetDatabase(context.DatabaseName);
+            this._database = client.GetDatabase(context.DatabaseName);
             
             this._loggedInUserService = loggedInUserService;
 
             this._repository = repository;
-            this._repository.SetCollection(database.GetCollection<T>(nameof(T)));
+            ////this._repository.SetCollection(this._database.GetCollection<T>(nameof(T)));
         }
 
         public async Task<List<T>> Get()
@@ -66,6 +67,11 @@
         public async Task Remove(string id)
         {
             await this._repository.Remove(id);
+        }
+
+        protected void SetCollectionName(string collectionName)
+        {
+            this._repository.SetCollection(this._database.GetCollection<T>(collectionName));
         }
     }
 }

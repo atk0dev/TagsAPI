@@ -17,6 +17,7 @@
             IDatabaseContext context)
             : base(client, repository, loggedInUserService, context)
         {
+            this.SetCollectionName("Tags");
         }
 
         public async Task<Domain.Entities.Tag> CreateTag(Domain.Entities.Tag tag)

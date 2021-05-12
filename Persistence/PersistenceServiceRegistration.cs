@@ -22,10 +22,11 @@
             services.AddSingleton<IMongoClient, MongoClient>(sp =>
                 new MongoClient(configuration.GetSection("DatabaseContext:ConnectionString").Value));
 
-            services.AddSingleton(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-            services.AddSingleton(typeof(IBaseService<>), typeof(BaseService<>));
-            services.AddSingleton<TagRepository>();
-            services.AddSingleton(typeof(ITagService), typeof(TagService));
+            services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddTransient(typeof(IBaseService<>), typeof(BaseService<>));
+            services.AddTransient<TagRepository>();
+            
+            services.AddTransient(typeof(ITagService), typeof(TagService));
             
             return services;    
         }
